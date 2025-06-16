@@ -1,0 +1,7 @@
+#!/usr/bin/execlineb -S1
+
+if { s6-test ${1} -ne 3 }
+
+s6-svscanctl -t /var/run/s6/services
+
+# vim: ts=2 sw=2 et:

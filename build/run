@@ -1,0 +1,19 @@
+#!/usr/bin/with-contenv sh
+
+if [ "$(ls -nd /config | tr -s '[:space:]' | cut -d' ' -f3)" -ne "$UID" ] || [ "$(ls -nd /config | tr -s '[:space:]' | cut -d' ' -f4)" -ne "$GID" ]; then
+  chown "$UID":"$GID" -R /config
+fi
+
+for d in $(find /dev/dri -type c 2>/dev/null); do
+  gid=$(stat -c %g "${d}")
+  [ -z "${GIDLIST}" ] && GIDLIST=${gid} || GIDLIST="${GIDLIST},${gid}"
+done 
+
+s6-applyuidgid -U /system/EmbyServer \
+  -programdata $PROGRAM_DATA \
+  -ffdetect $FFDETECT \
+  -ffmpeg $FFMPEG \
+  -ffprobe $FFPROBE \
+  -restartexitcode 3
+
+# vim: ts=2 sw=2 et:
