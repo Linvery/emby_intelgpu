@@ -1,0 +1,33 @@
+version: '3'
+services:
+  emby:
+    image: linvery/emby_intelgpu:latest
+    container_name: embyserver
+    network_mode: host  # 启用 DLNA 和 Wake-on-Lan
+    environment:
+      - UID=0  # 运行 emby 的用户 ID
+      - GID=0  # 运行 emby 的组 ID
+      - GIDLIST=0,18
+      - TZ=Asia/Shanghai
+      # 如果需要代理，取消下面的注释并修改代理地址
+      # - NO_PROXY=172.17.0.1,127.0.0.1,localhost
+      # - ALL_PROXY=http://your-proxy:port
+      # - HTTP_PROXY=http://your-proxy:port
+      # - HTTPS_PROXY=http://your-proxy:port
+    volumes:
+      - ./config:/config  # Emby 配置目录
+      - ./media:/media    # 媒体文件目录
+    ports:
+      - 8096:8096  # HTTP 端口
+      - 8920:8920  # HTTPS 端口
+    devices:
+      - /dev/dri:/dev/dri  # Intel GPU 设备
+    restart: on-failure
+    privileged: true  # 需要特权模式来访问 GPU
+
+# 使用说明：
+# 1. 将 ./config 替换为您的 Emby 配置目录路径
+# 2. 将 ./media 替换为您的媒体文件目录路径
+# 3. 如果需要使用代理，取消相关环境变量的注释并设置正确的代理地址
+# 4. 确保主机系统已正确安装 Intel GPU 驱动
+# 5. 运行命令：docker-compose up -d 
