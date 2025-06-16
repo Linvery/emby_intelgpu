@@ -1,6 +1,8 @@
 # Emby Intel GPU 定制版
 
-Docker Hub: [linvery/emby_intelgpu](https://hub.docker.com/r/linvery/emby_intelgpu)
+Docker Hub: https://hub.docker.com/r/linvery/emby_intelgpu
+
+Github项目地址：https://github.com/Linvery/emby_intelgpu
 
 这是一个基于 Arch Linux 的 Emby 媒体服务器定制版本，专门针对 Intel GPU 硬件加速进行了优化，特别支持 Intel DG1 显卡的 QSV 硬件解码。
 
