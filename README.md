@@ -1,5 +1,7 @@
 # Emby Intel GPU 定制版
 
+Docker Hub: [linvery/emby_intelgpu](https://hub.docker.com/r/linvery/emby_intelgpu)
+
 这是一个基于 Arch Linux 的 Emby 媒体服务器定制版本，专门针对 Intel GPU 硬件加速进行了优化，特别支持 Intel DG1 显卡的 QSV 硬件解码。
 
 ## 特性
@@ -20,23 +22,41 @@
 
 ## 快速开始
 
+### 方法一：使用 Docker Compose（推荐）
+
 1. 克隆仓库：
 ```bash
 git clone https://github.com/yourusername/emby_intelgpu.git
 cd emby_intelgpu
 ```
 
-2. 构建 Docker 镜像（仅构建正式版本）：
-```bash
-# 查看可用的版本标签
-git tag
+2. 配置 docker-compose.yml：
+   - 打开 `docker-compose.yml` 文件
+   - 修改以下配置：
+     - `PUID`：设置为您当前用户的 UID（默认 1000）
+     - `PGID`：设置为您当前用户的 GID（默认 1000）
+     - `TZ`：设置为您所在的时区（例如：Asia/Shanghai）
+     - 修改卷挂载路径：
+       - `/path/to/config` 替换为 Emby 配置文件的存储路径
+       - `/path/to/media` 替换为您的媒体文件存储路径
 
-# 构建特定版本的镜像
-git checkout v1.1  # 切换到要构建的版本标签
-docker build -t emby_intelgpu:v1.1 .
+3. 启动服务：
+```bash
+# 启动 Emby 服务
+docker-compose up -d
+
+# 查看运行日志
+docker-compose logs -f
 ```
 
-3. 运行容器：
+4. 访问服务：
+   - 打开浏览器访问 `http://localhost:8096`
+   - 首次访问时，按照向导完成 Emby 的初始设置
+
+### 方法二：使用 Docker Run
+
+如果您更喜欢使用 docker run 命令，可以使用以下命令：
+
 ```bash
 docker run -d \
   --name=emby \
@@ -48,7 +68,22 @@ docker run -d \
   -v /path/to/config:/config \
   -v /path/to/media:/media \
   --device=/dev/dri:/dev/dri \
-  emby_intelgpu:v1.1
+  linvery/emby_intelgpu:latest
+```
+
+### 方法三：从源码构建（仅用于开发或测试）
+
+如果您需要从源码构建镜像：
+
+```bash
+# 查看可用的版本标签
+git tag
+
+# 切换到要构建的版本
+git checkout v1.1  # 替换为您需要的版本标签
+
+# 构建镜像
+docker build -t emby_intelgpu:v1.1 .
 ```
 
 ## 硬件加速配置
