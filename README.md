@@ -26,10 +26,14 @@ git clone https://github.com/yourusername/emby_intelgpu.git
 cd emby_intelgpu
 ```
 
-2. 构建 Docker 镜像：
+2. 构建 Docker 镜像（仅构建正式版本）：
 ```bash
-cd build
-docker build -t emby_intelgpu:latest .
+# 查看可用的版本标签
+git tag
+
+# 构建特定版本的镜像
+git checkout v1.1  # 切换到要构建的版本标签
+docker build -t emby_intelgpu:v1.1 .
 ```
 
 3. 运行容器：
@@ -44,7 +48,7 @@ docker run -d \
   -v /path/to/config:/config \
   -v /path/to/media:/media \
   --device=/dev/dri:/dev/dri \
-  emby_intelgpu:latest
+  emby_intelgpu:v1.1
 ```
 
 ## 硬件加速配置
