@@ -28,7 +28,7 @@ Github项目地址：https://github.com/Linvery/emby_intelgpu
 
 1. 克隆仓库：
 ```bash
-git clone https://github.com/yourusername/emby_intelgpu.git
+git clone https://github.com/Linvery/emby_intelgpu.git
 cd emby_intelgpu
 ```
 
