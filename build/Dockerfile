@@ -4,8 +4,8 @@ USER root
 RUN mkdir /init2 && mkdir /system
 COPY . /init2/
 
-ARG EMBY_V=4.9.0.60
-ARG EMBY_CRACK_V=4.9.0.60b
+ARG EMBY_V=4.9.1.80
+ARG EMBY_CRACK_V=4.9.1.80
 ARG FFMPEG_V=2023_06_25
 
 ENV TZ=Asia/Shanghai
